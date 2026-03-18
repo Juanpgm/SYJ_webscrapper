@@ -1,0 +1,66 @@
+sources:
+  - id: "nitter_cali"
+    name: "Nitter Cali"
+    type: "nitter"
+    enabled: true
+    prefer_browser: true
+    instances:
+      - "https://nitter.net"
+      - "https://nitter.poast.org"
+      - "https://nitter.privacydev.net"
+      - "https://nitter.1d4.us"
+    search_queries:
+      - "seguridad cali"
+      - "hurto cali"
+      - "inseguridad cali"
+      - "mio cali seguridad"
+    max_posts: 20
+
+  - id: "youtube_cali"
+    name: "YouTube Cali Seguridad"
+    type: "youtube"
+    enabled: true
+    search_queries:
+      - "seguridad cali"
+      - "inseguridad cali"
+      - "homicidio cali"
+    max_videos_per_query: 2
+    max_comments_per_video: 8
+    transcript_languages: ["es", "es-419", "en"]
+    audio_transcription_enabled: true
+    whisper_model: "tiny"
+    whisper_device: "auto"
+    whisper_compute_type: "int8"
+
+  - id: "facebook_publico_cali"
+    name: "Facebook Publico Cali"
+    type: "facebook"
+    enabled: true
+    prefer_browser: true
+    page_urls:
+      - "https://mbasic.facebook.com/AlcaldiaDeCali/"
+      - "https://mbasic.facebook.com/PoliciaCali/"
+      - "https://mbasic.facebook.com/BLURadioCali/"
+    max_posts_per_page: 8
+
+  - id: "instagram_cali"
+    name: "Instagram Cali Seguridad"
+    type: "instagram"
+    enabled: true
+    prefer_browser: true
+    profile_urls:
+      - "https://www.instagram.com/policiacali/"
+      - "https://www.instagram.com/alcaldiadecali/"
+      - "https://www.instagram.com/90minutoscali/"
+      - "https://www.instagram.com/bluradiocali/"
+    post_urls: []
+    hashtags:
+      - "seguridadcali"
+      - "inseguridadcali"
+      - "cali"
+    max_posts_per_profile: 6
+    max_comments_per_post: 10
+    transcribe_videos: true
+    whisper_model: "tiny"
+    whisper_device: "auto"
+    whisper_compute_type: "int8"

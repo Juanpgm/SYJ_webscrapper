@@ -1,0 +1,35 @@
+[
+  {
+    "mode": "cloudflare",
+    "name": "Cloudflare Only",
+    "html_saved": 34,
+    "json_saved": 36,
+    "failed": 0,
+    "skipped": 23,
+    "urls_seen": 59,
+    "fetcher_stats": {},
+    "sources": 3
+  },
+  {
+    "mode": "requests",
+    "name": "Requests Only",
+    "html_saved": 0,
+    "json_saved": 36,
+    "failed": 0,
+    "skipped": 23,
+    "urls_seen": 59,
+    "fetcher_stats": {},
+    "sources": 3
+  },
+  {
+    "mode": "auto",
+    "name": "Auto + Paralelo",
+    "html_saved": 0,
+    "json_saved": 36,
+    "failed": 0,
+    "skipped": 23,
+    "urls_seen": 59,
+    "fetcher_stats": {},
+    "sources": 3
+  }
+]

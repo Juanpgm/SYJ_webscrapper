@@ -1,0 +1,41 @@
+local:
+  - "el_pais_cali"
+  - "qhubo_cali"
+  - "blu_radio_cali"
+regional:
+  - "diario_occidente_valle"
+nacional:
+  - "el_tiempo_nacional"
+
+possible_sources:
+  local_cali:
+    - "El Pais Cali"
+    - "Qhubo Cali"
+    - "Blu Radio Cali"
+    - "W Radio Cali"
+    - "90 Minutos"
+    - "Telepacifico Noticias"
+    - "CW+ Noticias"
+    - "TuBarco Cali"
+  regional_valle:
+    - "Diario Occidente"
+    - "El Pais Valle"
+    - "Gobernacion del Valle"
+    - "Policia Metropolitana de Cali"
+    - "Policia Valle"
+    - "Fiscalia Seccional Valle"
+  nacional_colombia:
+    - "El Tiempo"
+    - "El Espectador"
+    - "Semana"
+    - "La Republica"
+    - "Caracol Noticias"
+    - "RCN Noticias"
+    - "Infobae Colombia"
+  internacional:
+    - "AP News"
+    - "Reuters"
+    - "BBC Mundo"
+    - "DW Espanol"
+    - "France24 Espanol"
+    - "CNN en Espanol"

@@ -1,0 +1,31 @@
+id: "el_pais_cali"
+name: "El Pais Cali"
+priority: "local"
+base_url: "https://www.elpais.com.co"
+listing_urls:
+  - "https://www.elpais.com.co/cali/"
+  - "https://www.elpais.com.co/judicial/"
+google_queries:
+  - "cali seguridad"
+  - "cali judicial"
+  - "inseguridad cali"
+  - "homicidio cali"
+link_selectors:
+  - "a[href*='/cali/']"
+  - "a[href*='/judicial/']"
+  - "article a[href]"
+selectors:
+  title_selectors:
+    - "h1"
+    - "h2"
+  date_selectors:
+    - "time"
+    - "meta[property='article:published_time']"
+    - "span[class*='date']"
+  content_selectors:
+    - "article"
+    - "div[class*='article-body']"
+    - "div[class*='content']"
+  snippet_selectors:
+    - "meta[name='description']"
+    - "p[class*='summary']"

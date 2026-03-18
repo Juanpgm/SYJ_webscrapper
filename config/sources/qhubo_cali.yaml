@@ -1,0 +1,15 @@
+id: "qhubo_cali"
+name: "Qhubo Cali"
+priority: "local"
+base_url: "https://www.qhubocali.com"
+listing_urls:
+  - "https://www.qhubocali.com/"
+link_selectors:
+  - "a[href*='cali']"
+  - "a[href*='judicial']"
+  - "article a[href]"
+selectors:
+  title_selectors: ["h1", "h2"]
+  date_selectors: ["time", "span[class*='date']"]
+  content_selectors: ["article", "div[class*='content']"]
+  snippet_selectors: ["meta[name='description']", "p"]

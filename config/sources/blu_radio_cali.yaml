@@ -1,0 +1,15 @@
+id: "blu_radio_cali"
+name: "Blu Radio Cali"
+priority: "local"
+base_url: "https://www.bluradio.com"
+listing_urls:
+  - "https://www.bluradio.com/noticias/cali"
+link_selectors:
+  - "a[href*='cali']"
+  - "a[href*='judicial']"
+  - "article a[href]"
+selectors:
+  title_selectors: ["h1", "h2"]
+  date_selectors: ["time", "span[class*='date']"]
+  content_selectors: ["article", "div[class*='content']"]
+  snippet_selectors: ["meta[name='description']", "p"]

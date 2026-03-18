@@ -1,0 +1,15 @@
+id: "diario_occidente_valle"
+name: "Diario Occidente"
+priority: "regional"
+base_url: "https://occidente.co"
+listing_urls:
+  - "https://occidente.co/cali/"
+  - "https://occidente.co/judicial/"
+link_selectors:
+  - "a[href*='/cali/']"
+  - "a[href*='/judicial/']"
+selectors:
+  title_selectors: ["h1", "h2"]
+  date_selectors: ["time", "span[class*='date']"]
+  content_selectors: ["article", "div[class*='content']"]
+  snippet_selectors: ["meta[name='description']", "p"]

@@ -1,0 +1,14 @@
+id: "el_tiempo_nacional"
+name: "El Tiempo"
+priority: "nacional"
+base_url: "https://www.eltiempo.com"
+listing_urls:
+  - "https://www.eltiempo.com/colombia/cali"
+link_selectors:
+  - "a[href*='/colombia/cali']"
+  - "article a[href]"
+selectors:
+  title_selectors: ["h1", "h2"]
+  date_selectors: ["time", "span[class*='date']"]
+  content_selectors: ["article", "div[class*='content']"]
+  snippet_selectors: ["meta[name='description']", "p"]

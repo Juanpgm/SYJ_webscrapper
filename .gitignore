@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+logs/*.log
+data/raw_html/*
+!data/raw_html/.gitkeep
+data/parsed_json/*
+!data/parsed_json/.gitkeep
+data/checkpoints/*.json
+data/failed/*
+!data/failed/.gitkeep

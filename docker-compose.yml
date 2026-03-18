@@ -1,0 +1,37 @@
+services:
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: syj-webscrapper:local
+    container_name: syj_scraper_app
+    working_dir: /app
+    shm_size: "2gb"
+    volumes:
+      - ./:/app
+    environment:
+      TZ: America/Bogota
+      PYTHONUNBUFFERED: "1"
+      CHROME_BIN: /usr/bin/chromium
+      CHROMEDRIVER: /usr/bin/chromedriver
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: llama3.1:8b
+    command: ["python", "run_scheduler.py"]
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: syj_ollama
+    profiles: ["ollama"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      OLLAMA_KEEP_ALIVE: 24h
+    restart: unless-stopped
+
+volumes:
+  ollama_data:

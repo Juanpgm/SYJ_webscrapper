@@ -1,0 +1,64 @@
+timezone: "America/Bogota"
+max_articles_per_source: 100
+request_timeout_seconds: 25
+min_delay_seconds: 1.0
+max_delay_seconds: 3.5
+max_retries: 3
+headless: true
+use_stealth_browser: false
+use_cloudflare_scraper: true
+use_selenium_scraper: false
+selenium_timeout_seconds: 30
+selenium_headless: true
+include_social_sources: false
+use_ollama_nlp: false
+ollama_base_url: "http://localhost:11434"
+ollama_model: "llama3.1:8b"
+ollama_timeout_seconds: 45
+parallel_fetch: true
+parallel_fetch_timeout_seconds: 30
+max_parallel_articles: 24
+schedule_hours: [6, 18]
+schedule_minute: 0
+google_security_focus: true
+google_max_queries_per_source: 50
+google_max_queries_per_run: 15
+google_parallel_queries: 4
+google_pages_per_query: 3
+google_results_per_page: 100
+
+paths:
+  raw_html_dir: "data/raw_html"
+  parsed_json_dir: "data/parsed_json"
+  checkpoints_dir: "data/checkpoints"
+  failed_dir: "data/failed"
+
+keywords:
+  - "seguridad"
+  - "judicial"
+  - "justicia"
+  - "bandas criminales"
+  - "terrorismo"
+  - "policia"
+  - "homicidios"
+  - "homicidio"
+  - "hurtos"
+  - "hurto"
+  - "abuso"
+  - "corrupcion"
+  - "fiscalia"
+  - "capturas"
+  - "extorsion"
+  - "sicariato"
+  - "delincuencia"
+  - "criminalidad"
+  - "orden publico"
+  - "inseguridad"
+  - "homicidio"
+  - "hurto"
+  - "percepcion de seguridad"
+  - "seguridad ciudadana"
+  - "delito"
+  - "cali"
+  - "santiago de cali"
+  - "valle del cauca"
