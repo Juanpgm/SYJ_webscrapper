@@ -104,6 +104,7 @@ class YouTubeTranscriptService:
             "format": "bestaudio/best",
             "quiet": True,
             "no_warnings": True,
+            "noprogress": True,
             "noplaylist": True,
             "outtmpl": output_template,
             "retries": 2,

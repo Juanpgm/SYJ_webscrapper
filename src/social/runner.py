@@ -20,6 +20,22 @@ from src.social.youtube_connector import YouTubeConnector
 from src.utils.output_payload import normalize_output_payload
 
 
+def _in_date_range(date_str: str, start: datetime | None, end: datetime | None) -> bool:
+    if not start and not end:
+        return True
+    if not date_str:
+        return True
+    try:
+        dt = datetime.strptime(date_str, "%d/%m/%Y")
+    except (ValueError, TypeError):
+        return True
+    if start and dt < start:
+        return False
+    if end and dt > end:
+        return False
+    return True
+
+
 def _load_social_sources(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         return []
@@ -116,6 +132,7 @@ def run_social_sources(
                     start_date=start_date,
                     end_date=end_date,
                     keywords=list(app_cfg.get("keywords", [])),
+                    existing_urls=existing_urls,
                 )
             except Exception as exc:
                 stats["social_failed"] += 1
@@ -148,6 +165,9 @@ def run_social_sources(
                 for payload in all_items:
                     url = str(payload.get("url_noticia", ""))
                     if not url or url in seen_urls:
+                        continue
+                    # Apply date range filter to all items (existing + new)
+                    if not _in_date_range(payload.get("fecha_publicacion", ""), start_date, end_date):
                         continue
                     seen_urls.add(url)
                     deduped.append(normalize_output_payload(payload, default_source_type="social"))

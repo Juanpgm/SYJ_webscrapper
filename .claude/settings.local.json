@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://127.0.0.1:8000/sources)",
+      "Bash(python -m json.tool)",
+      "Bash(curl -s http://127.0.0.1:8000/jobs/a34182bf-08f9-48db-9cde-82f71e00a539)",
+      "Bash(python -c \"import psutil; print\\(''''psutil OK'''', psutil.__version__\\)\" 2)",
+      "Bash(1 ffmpeg:*)",
+      "Bash(head -1 python -c \"import faster_whisper; print\\(''''faster_whisper OK''''\\)\" 2)",
+      "Bash(1 python:*)",
+      "Bash(python -c \":*)",
+      "Bash(yt-dlp --extractor-args \"youtube:player_client=mweb\" --skip-download -o \"%\\(title\\)s\" \"https://www.youtube.com/watch?v=X54nbYSoH-A\")",
+      "Bash(python:*)",
+      "Bash(npm install:*)",
+      "Bash(youtube-po-token-generator)",
+      "Bash(timeout 50 yt-dlp --extractor-args \"youtube:po_token=GVS+MniBPc7gRO4Yf4EBubfxWUVRIsfw4Pmiiq-FFlp65quO7OQnUfQmAPLVChV5ZyPD9NbpLSpftyFDuVU4GGdQubTMf4AduLkpIyA69CX2zayuDnQ75EYPV0D1ShEvrW2Ix3MSfJX37c3ucZfULKGfr47fEfIsz8ifQnU=;visitor_data=CgtiUTMwSXRLeF93RSiT_JjOBjIKCgJDTxIEGgAgTQ%3D%3D\" --skip-download --print title \"https://www.youtube.com/watch?v=dQw4w9WgXcQ\")",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(yt-dlp --extractor-args \"youtube:player_client=android\" --js-runtimes node --skip-download --print title \"https://www.youtube.com/watch?v=X54nbYSoH-A\")",
+      "Bash(echo \"RC=$?\")",
+      "Bash(pip install:*)",
+      "Bash(netstat -ano)",
+      "Bash(wmic process:*)",
+      "Bash(curl -s -X POST http://127.0.0.1:8002/auth/youtube/login -H \"Content-Type: application/json\" -d '{\"\"\"\"timeout_seconds\"\"\"\": 120}')",
+      "Bash(curl -s http://127.0.0.1:8002/auth/youtube/login/status)",
+      "Bash(curl -s http://127.0.0.1:8002/auth/youtube/status)",
+      "Bash(yt-dlp --cookiefile data/yt_cookies.txt --list-formats \"https://www.youtube.com/watch?v=X54nbYSoH-A\")",
+      "Bash(yt-dlp --cookiefile data/yt_cookies.txt -F \"https://www.youtube.com/watch?v=X54nbYSoH-A\")",
+      "Bash(yt-dlp --cookies data/yt_cookies.txt -F \"https://www.youtube.com/watch?v=X54nbYSoH-A\")",
+      "Bash(yt-dlp --cookies data/yt_cookies.txt --js-runtimes node -F \"https://www.youtube.com/watch?v=X54nbYSoH-A\")",
+      "Bash(curl -s http://127.0.0.1:8000/)",
+      "Bash(curl -s http://127.0.0.1:8000/auth/youtube/status)",
+      "Bash(taskkill:*)",
+      "Bash(curl -s -X POST http://127.0.0.1:8000/transcribe/youtube -H \"Content-Type: application/json\" -d \"{\"\"url\"\":\"\"https://www.youtube.com/watch?v=HEtT4U3P7wE\"\",\"\"model\"\":\"\"small\"\",\"\"language\"\":\"\"es\"\",\"\"device\"\":\"\"cpu\"\",\"\"compute_type\"\":\"\"int8\"\",\"\"vad_filter\"\":true,\"\"beam_size\"\":2}\" -o _transcribe_result.json)",
+      "Bash(curl -s http://localhost:8000/health)"
+    ]
+  }
+}

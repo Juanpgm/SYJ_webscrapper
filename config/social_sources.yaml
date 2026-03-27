@@ -24,7 +24,10 @@ sources:
       - "seguridad cali"
       - "inseguridad cali"
       - "homicidio cali"
+    channel_urls: []
+    video_urls: []
     max_videos_per_query: 2
+    max_videos_per_channel: 5
     max_comments_per_video: 8
     transcript_languages: ["es", "es-419", "en"]
     audio_transcription_enabled: true
@@ -44,22 +47,108 @@ sources:
     max_posts_per_page: 8
 
   - id: "instagram_cali"
-    name: "Instagram Cali Seguridad"
+    name: "Instagram Cali Noticias"
     type: "instagram"
     enabled: true
     prefer_browser: true
+    # Autenticacion: usar UNO de los dos metodos:
+    # 1. cookies_file: exportar cookies.txt desde Chrome con extension "Get cookies.txt LOCALLY"
+    # 2. cookies_from_browser: "chrome" (requiere Chrome cerrado)
+    cookies_file: "config/instagram_cookies.txt"
+    cookies_from_browser: null
     profile_urls:
-      - "https://www.instagram.com/policiacali/"
-      - "https://www.instagram.com/alcaldiadecali/"
-      - "https://www.instagram.com/90minutoscali/"
-      - "https://www.instagram.com/bluradiocali/"
+      - "https://www.instagram.com/alertacalidad/"
+      - "https://www.instagram.com/cali_informa/"
+      - "https://www.instagram.com/enteratecali/"
+      - "https://www.instagram.com/ultimahoracalioficial/"
+      - "https://www.instagram.com/elcalenoviral/"
+      - "https://www.instagram.com/calioknoticias/"
+      - "https://www.instagram.com/radiorelojcali/"
+      - "https://www.instagram.com/calivenoticias/"
+      - "https://www.instagram.com/quepasaencali/"
+      - "https://www.instagram.com/lanoticiaencali/"
+      - "https://www.instagram.com/radiosupercali/"
+      - "https://www.instagram.com/calisincensura/"
+      - "https://www.instagram.com/cwnoticias/"
+      - "https://www.instagram.com/colombiaoscura/"
+      - "https://www.instagram.com/caliactivaoficial/"
+      - "https://www.instagram.com/tubarco/"
+      - "https://www.instagram.com/tomennotacali/"
+      - "https://www.instagram.com/zonacnoticiasoficial/"
+      - "https://www.instagram.com/elpaiscali/"
     post_urls: []
     hashtags:
       - "seguridadcali"
       - "inseguridadcali"
+      - "hurtoscali"
+      - "violenciacali"
+      - "homicidioscali"
+      - "feminicidiocali"
+      - "narcotraficocali"
+      - "estafacali"
+      - "roboscali"
       - "cali"
-    max_posts_per_profile: 6
-    max_comments_per_post: 10
+    # Keywords para filtrar posts relevantes (si el post no contiene al menos uno, se descarta)
+    filter_keywords:
+      - "cali"
+      - "santiago de cali"
+      - "seguridad"
+      - "inseguridad"
+      - "homicidio"
+      - "asesinato"
+      - "hurto"
+      - "robo"
+      - "atraco"
+      - "fleteo"
+      - "estafa"
+      - "estafador"
+      - "fraude"
+      - "narcotrafico"
+      - "narcotráfico"
+      - "microtráfico"
+      - "microtrafico"
+      - "droga"
+      - "cocaina"
+      - "reclutamiento forzado"
+      - "reclutamiento"
+      - "disidencia"
+      - "grupo armado"
+      - "guerrilla"
+      - "feminicidio"
+      - "femicidio"
+      - "violencia de género"
+      - "violencia de genero"
+      - "violencia intrafamiliar"
+      - "abuso sexual"
+      - "sicariato"
+      - "balacera"
+      - "tiroteo"
+      - "apuñalado"
+      - "puñalada"
+      - "extorsión"
+      - "extorsion"
+      - "secuestro"
+      - "desaparecido"
+      - "desaparecida"
+      - "pandilla"
+      - "delincuencia"
+      - "policía"
+      - "policia"
+      - "capturado"
+      - "captura"
+      - "operativo"
+      - "muerto"
+      - "víctima"
+      - "victima"
+      - "riña"
+      - "accidente"
+      - "emergencia"
+      - "masacre"
+      - "banda criminal"
+      - "bacrim"
+    max_posts_per_profile: 12
+    max_comments_per_post: 20
+    rate_limit_per_hour: 150
     transcribe_videos: true
     whisper_model: "tiny"
     whisper_device: "auto"

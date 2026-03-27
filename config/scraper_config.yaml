@@ -10,7 +10,7 @@ use_cloudflare_scraper: true
 use_selenium_scraper: false
 selenium_timeout_seconds: 30
 selenium_headless: true
-include_social_sources: false
+include_social_sources: true
 use_ollama_nlp: false
 ollama_base_url: "http://localhost:11434"
 ollama_model: "llama3.1:8b"

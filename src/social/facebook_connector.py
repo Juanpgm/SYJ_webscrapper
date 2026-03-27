@@ -16,6 +16,7 @@ class FacebookConnector(BaseSocialConnector):
         start_date: datetime | None,
         end_date: datetime | None,
         keywords: list[str] | None,
+        existing_urls: set[str] | None = None,
     ) -> list[dict]:
         page_urls = list(self.source.get("page_urls") or [])
         max_posts_per_page = int(self.source.get("max_posts_per_page", 8))

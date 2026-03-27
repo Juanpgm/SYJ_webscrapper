@@ -56,6 +56,8 @@ def main() -> None:
     saved = 0
     failed = 0
     missing_index = 0
+    # Accumulate articles per source for consolidated output
+    articles_by_source: dict[str, list[dict]] = {}
 
     for source_dir in sorted([p for p in raw_root.iterdir() if p.is_dir()]):
         source_id = source_dir.name
@@ -64,6 +66,8 @@ def main() -> None:
         selectors = source_profiles.get(source_id) or source_cfg.get("selectors") or {}
         if not isinstance(selectors, dict):
             selectors = {}
+
+        articles_by_source[source_id] = []
 
         for day_dir in sorted([p for p in source_dir.iterdir() if p.is_dir()]):
             out_day_dir = parsed_root / source_id / day_dir.name
@@ -99,6 +103,7 @@ def main() -> None:
                         default_source_type="news",
                     )
                     json_fp.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
+                    articles_by_source[source_id].append(output)
                     saved += 1
                 except Exception as exc:
                     failed += 1
@@ -118,6 +123,15 @@ def main() -> None:
                         encoding="utf-8",
                     )
 
+    # Write one consolidated JSON per source
+    for source_id, articles in articles_by_source.items():
+        if not articles:
+            continue
+        consolidated_fp = parsed_root / f"{source_id}.json"
+        consolidated_fp.write_text(
+            json.dumps(articles, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+
     print(
         json.dumps(
             {
@@ -125,6 +139,9 @@ def main() -> None:
                 "json_saved": saved,
                 "failed": failed,
                 "missing_index_url": missing_index,
+                "consolidated_json": {
+                    sid: len(arts) for sid, arts in articles_by_source.items() if arts
+                },
             },
             ensure_ascii=False,
             indent=2,

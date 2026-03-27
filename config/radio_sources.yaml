@@ -1,0 +1,54 @@
+# Configuración de emisoras de radio monitoreadas via YouTube Live
+# IMPORTANTE: Verifica los handles de YouTube con el URL real de cada emisora
+# Formato: https://www.youtube.com/@HANDLE/live  → redirige al stream activo
+
+stations:
+  - id: tropicana_cali
+    name: Tropicana Cali
+    # URL del canal en YouTube. El /live al final apunta al stream activo.
+    channel_url: https://www.youtube.com/@TropicanaRadioColombia/live
+    enabled: true
+
+  - id: radio_reloj
+    name: Radio Reloj
+    channel_url: https://www.youtube.com/@RadioRelojColombia/live
+    enabled: true
+
+  - id: radio_calidad
+    name: Radio Calidad
+    channel_url: https://www.youtube.com/@RadioCalidadCali/live
+    enabled: true
+
+  - id: boom_radio
+    name: Boom Radio
+    channel_url: https://www.youtube.com/@BoomRadioColombia/live
+    enabled: true
+
+settings:
+  # Modelo Whisper: tiny | base | small | medium | large-v3
+  # Para CPU: small es buen balance velocidad/calidad en español
+  whisper_model: small
+  whisper_device: cpu
+  whisper_compute_type: int8
+
+  # Idioma de transcripción
+  language: es
+
+  # Duración de cada chunk de audio enviado a Whisper (segundos)
+  # Valores menores = menor latencia; mayores = mejor contexto
+  chunk_duration_seconds: 30
+
+  # Segundos entre intentos de detección de stream cuando la emisora está offline
+  poll_interval_seconds: 120
+
+  # VAD integrado en Whisper: descarta música y silencios automáticamente
+  vad_filter: true
+
+  # Silencio mínimo para cortar segmentos (ms)
+  vad_min_silence_ms: 500
+
+  # Directorio de salida para transcripciones (JSONL por emisora)
+  output_dir: data/radio_transcriptions
+
+  # Máximo de entradas a mantener en memoria por emisora (para la API)
+  max_memory_entries: 200

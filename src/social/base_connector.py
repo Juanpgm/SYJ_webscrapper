@@ -23,5 +23,6 @@ class BaseSocialConnector(ABC):
         start_date: datetime | None,
         end_date: datetime | None,
         keywords: list[str] | None,
+        existing_urls: set[str] | None = None,
     ) -> list[dict]:
         raise NotImplementedError

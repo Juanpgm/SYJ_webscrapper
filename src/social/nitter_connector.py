@@ -49,6 +49,7 @@ class NitterConnector(BaseSocialConnector):
         start_date: datetime | None,
         end_date: datetime | None,
         keywords: list[str] | None,
+        existing_urls: set[str] | None = None,
     ) -> list[dict]:
         queries = list(self.source.get("search_queries") or keywords or [])
         if not queries:

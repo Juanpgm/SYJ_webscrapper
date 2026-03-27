@@ -1,0 +1,8 @@
+INFO:     Started server process [35556]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:63372 - "GET / HTTP/1.1" 200 OK
+2026-03-27 04:21:51,160 [WARNING] auth.youtube: Error generando PO token: Command '['C:\\nvm4w\\nodejs\\youtube-po-token-generator.cmd']' timed out after 45 seconds
+ERROR: [youtube] HEtT4U3P7wE: Requested format is not available. Use --list-formats for a list of available formats
+INFO:     127.0.0.1:63384 - "POST /transcribe/youtube HTTP/1.1" 422 Unprocessable Entity

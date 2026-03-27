@@ -69,9 +69,12 @@ _POSITIVE_WORDS = {
 
 _INCIDENT_RULES = {
     "Explosivos/Terror": [r"\bexplosiv", r"\bbomba", r"\batentad", r"\bterror"],
-    "Violencia letal": [r"\bhomicid", r"\basesinad", r"\bmuert[oa]s?\b", r"\bsicari"],
+    "Violencia letal": [r"\bhomicid", r"\basesinad", r"\bmuert[oa]s?\b", r"\bsicari", r"\bmasacre"],
     "Secuestro/Extorsion": [r"\bsecuestro", r"\bextors", r"\bvacuna\b"],
-    "Crimen organizado": [r"\bnarcotraf", r"\bdisidenc", r"\bgrupo[s]? armad", r"\bmaf"],
+    "Crimen organizado": [r"\bnarcotraf", r"\bdisidenc", r"\bgrupo[s]? armad", r"\bmaf", r"\bbacrim", r"\bbanda criminal"],
+    "Narcotrafico": [r"\bnarcotraf", r"\bmicrotraf", r"\bdroga", r"\bcocain", r"\bcargamento", r"\bincauta.*droga"],
+    "Reclutamiento forzado": [r"\breclutamiento", r"\breclutad", r"\bmenor.*armad", r"\bnino.*guerra"],
+    "Estafa/Fraude": [r"\bestafa", r"\bfraude", r"\bpiramide", r"\bengano", r"\bestafador"],
     "Delitos patrimoniales": [r"\bhurto", r"\brobo", r"\bestafa", r"\batraco", r"\bfleteo"],
     "Judicial/Control": [r"\bcaptur", r"\bfiscal", r"\bpolicia", r"\boperativo", r"\bincauta"],
     "Convivencia social": [r"\bri[aá]s?\b", r"\bintolerancia", r"\bcomunidad", r"\bvecin"],

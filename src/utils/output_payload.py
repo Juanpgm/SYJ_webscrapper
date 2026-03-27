@@ -55,12 +55,12 @@ def normalize_output_payload(payload: dict[str, Any], *, default_source_type: st
     for item in comments:
         if not isinstance(item, dict):
             continue
-        text = str(item.get("texto") or "").strip()
+        text = str(item.get("texto") or item.get("comment_content") or "").strip()
         if not text:
             continue
+        username = str(item.get("usuario") or item.get("username") or "").strip() or None
         fecha_hora = str(item.get("fecha_hora") or "").strip() or None
-        usuario = str(item.get("usuario") or "").strip() or None
-        clean_comments.append({"fecha_hora": fecha_hora, "usuario": usuario, "texto": text})
+        clean_comments.append({"usuario": username, "texto": text, "fecha_hora": fecha_hora})
 
     comments_text = normalized.get("comments_text")
     if not isinstance(comments_text, list):
@@ -70,7 +70,7 @@ def normalize_output_payload(payload: dict[str, Any], *, default_source_type: st
     if clean_comments and not clean_comments_text:
         clean_comments_text = [item["texto"] for item in clean_comments]
     elif clean_comments_text and not clean_comments:
-        clean_comments = [{"fecha_hora": None, "usuario": None, "texto": value} for value in clean_comments_text]
+        clean_comments = [{"usuario": None, "texto": value, "fecha_hora": None} for value in clean_comments_text]
 
     normalized["comments"] = clean_comments
     normalized["comments_text"] = clean_comments_text
