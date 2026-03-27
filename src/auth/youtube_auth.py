@@ -29,9 +29,10 @@ ROOT = Path(__file__).resolve().parent.parent.parent
 _COOKIES_PATH = ROOT / "data" / "yt_cookies.txt"
 _TOKENS_CACHE = ROOT / "data" / "yt_po_token_cache.json"
 _NODE_BIN = "C:/nvm4w/nodejs/youtube-po-token-generator.cmd"
+_NODE_SCRIPT = "C:/nvm4w/nodejs/node_modules/youtube-po-token-generator/bin/cli.mjs"
 
-# PO token se renueva cada 5 minutos (expiran en ~6 min según yt-dlp docs)
-_PO_TOKEN_TTL = 300
+# PO tokens funcionan ~6 min según yt-dlp docs, en práctica hasta 60 min
+_PO_TOKEN_TTL = 3600
 
 _lock = threading.Lock()
 _token_cache: dict[str, Any] = {}
@@ -42,28 +43,35 @@ _token_cache: dict[str, Any] = {}
 def _generate_po_token() -> dict[str, str] | None:
     """
     Llama al generador Node.js y retorna {visitorData, poToken}.
+    Usa node directamente con --max-old-space-size para controlar el uso de RAM.
     Retorna None si el binario no está disponible.
     """
-    node_bin = Path(_NODE_BIN)
-    if not node_bin.exists():
-        # Intentar desde PATH
-        try:
+    node_script = Path(_NODE_SCRIPT)
+    try:
+        if node_script.exists():
+            # Invocar node directamente con límite de memoria para evitar OOM
             result = subprocess.run(
-                ["youtube-po-token-generator"],
-                capture_output=True, text=True, timeout=45,
+                ["node", "--max-old-space-size=512", str(node_script)],
+                capture_output=True, text=True,
             )
-        except FileNotFoundError:
-            log.warning("youtube-po-token-generator no encontrado. Instala con: npm install -g youtube-po-token-generator")
-            return None
-    else:
-        try:
-            result = subprocess.run(
-                [str(node_bin)],
-                capture_output=True, text=True, timeout=45,
-            )
-        except Exception as exc:
-            log.warning("Error generando PO token: %s", exc)
-            return None
+        else:
+            node_bin = Path(_NODE_BIN)
+            if node_bin.exists():
+                result = subprocess.run(
+                    [str(node_bin)],
+                    capture_output=True, text=True,
+                )
+            else:
+                result = subprocess.run(
+                    ["youtube-po-token-generator"],
+                    capture_output=True, text=True,
+                )
+    except FileNotFoundError:
+        log.warning("youtube-po-token-generator no encontrado. Instala con: npm install -g youtube-po-token-generator")
+        return None
+    except Exception as exc:
+        log.warning("Error generando PO token: %s", exc)
+        return None
 
     if result.returncode != 0 or not result.stdout.strip():
         log.warning("PO token generator falló (rc=%d): %s", result.returncode, result.stderr[:200])
@@ -78,6 +86,26 @@ def _generate_po_token() -> dict[str, str] | None:
         return None
 
 
+def _load_token_from_file() -> dict[str, str] | None:
+    """Carga tokens del archivo de caché si existen y no han expirado."""
+    if not _TOKENS_CACHE.exists():
+        return None
+    try:
+        data = json.loads(_TOKENS_CACHE.read_text(encoding="utf-8"))
+        file_ts = data.get("generated_at", 0)
+        if (time.time() - file_ts) >= _PO_TOKEN_TTL:
+            return None
+        tokens = {k: v for k, v in data.items() if k != "generated_at"}
+        if tokens.get("visitorData") and tokens.get("poToken"):
+            _token_cache["tokens"] = tokens
+            _token_cache["generated_at"] = file_ts
+            log.info("PO Token cargado desde caché de archivo (age=%.0fs).", time.time() - file_ts)
+            return tokens
+    except Exception:
+        pass
+    return None
+
+
 def get_po_token(force_refresh: bool = False) -> dict[str, str] | None:
     """Retorna tokens cacheados o genera nuevos si expiraron."""
     with _lock:
@@ -88,11 +116,16 @@ def get_po_token(force_refresh: bool = False) -> dict[str, str] | None:
         if not force_refresh and cached and (now - generated_at) < _PO_TOKEN_TTL:
             return cached
 
+        # Si no hay cache en memoria, intentar cargar desde archivo (persiste entre reinicios)
+        if not force_refresh and not cached:
+            file_tokens = _load_token_from_file()
+            if file_tokens:
+                return file_tokens
+
         tokens = _generate_po_token()
         if tokens:
             _token_cache["tokens"] = tokens
             _token_cache["generated_at"] = now
-            # Persistir para depuración
             try:
                 _TOKENS_CACHE.parent.mkdir(parents=True, exist_ok=True)
                 _TOKENS_CACHE.write_text(
@@ -186,6 +219,9 @@ def get_ydl_auth_opts(force_refresh_token: bool = False) -> dict[str, Any]:
 
 def auth_status() -> dict[str, Any]:
     """Retorna el estado completo de autenticación."""
+    # Asegurarse de que el cache de archivo esté cargado en memoria si aplica
+    if not _token_cache.get("tokens"):
+        _load_token_from_file()
     tokens = _token_cache.get("tokens")
     generated_at = _token_cache.get("generated_at", 0)
     age = int(time.time() - generated_at) if generated_at else None

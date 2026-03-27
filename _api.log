@@ -6,3 +6,12 @@ INFO:     127.0.0.1:63372 - "GET / HTTP/1.1" 200 OK
 2026-03-27 04:21:51,160 [WARNING] auth.youtube: Error generando PO token: Command '['C:\\nvm4w\\nodejs\\youtube-po-token-generator.cmd']' timed out after 45 seconds
 ERROR: [youtube] HEtT4U3P7wE: Requested format is not available. Use --list-formats for a list of available formats
 INFO:     127.0.0.1:63384 - "POST /transcribe/youtube HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:58563 - "GET /health HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60949 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60951 - "GET / HTTP/1.1" 200 OK
+2026-03-27 04:31:02,092 [INFO] auth.youtube: PO Token generado correctamente.
+ERROR: [youtube] HEtT4U3P7wE: Requested format is not available. Use --list-formats for a list of available formats
+INFO:     127.0.0.1:60969 - "POST /transcribe/youtube HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:63353 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64110 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64110 - "GET /openapi.json HTTP/1.1" 200 OK

@@ -31,7 +31,16 @@
       "Bash(curl -s http://127.0.0.1:8000/auth/youtube/status)",
       "Bash(taskkill:*)",
       "Bash(curl -s -X POST http://127.0.0.1:8000/transcribe/youtube -H \"Content-Type: application/json\" -d \"{\"\"url\"\":\"\"https://www.youtube.com/watch?v=HEtT4U3P7wE\"\",\"\"model\"\":\"\"small\"\",\"\"language\"\":\"\"es\"\",\"\"device\"\":\"\"cpu\"\",\"\"compute_type\"\":\"\"int8\"\",\"\"vad_filter\"\":true,\"\"beam_size\"\":2}\" -o _transcribe_result.json)",
-      "Bash(curl -s http://localhost:8000/health)"
+      "Bash(curl -s http://localhost:8000/health)",
+      "Bash(curl -s http://localhost:8000/docs)",
+      "Bash(curl -s http://localhost:8000/)",
+      "Bash(curl:*)",
+      "Bash(timeout 120 \"C:/nvm4w/nodejs/youtube-po-token-generator.cmd\" 2>&1)",
+      "Bash(pkill -f \"run_api.py\")",
+      "Bash(pkill -f \"uvicorn\")",
+      "Bash(cmd /c \"taskkill /PID 35556 /F\")",
+      "Bash(npm list:*)",
+      "Bash(node:*)"
     ]
   }
 }

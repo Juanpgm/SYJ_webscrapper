@@ -165,13 +165,36 @@ class _CpuSampler:
 
 # ── Audio download ────────────────────────────────────────────────────────────
 
+def _build_ios_opts(auth_opts: dict[str, Any]) -> dict[str, Any]:
+    """
+    Construye opts para el cliente ios de YouTube.
+    - ios bypasea el n-challenge (no necesita JS runtime)
+    - ios NO soporta cookies → se excluyen
+    - El PO Token para ios usa prefijo 'ios.gvs+' en vez de 'GVS+'
+    """
+    extractor_args = dict(auth_opts.get("extractor_args", {}))
+    yt_args = dict(extractor_args.get("youtube", {}))
+
+    # Convertir GVS+TOKEN → ios.gvs+TOKEN
+    gvs_tokens = [t for t in yt_args.get("po_token", []) if t.startswith("GVS+")]
+    ios_tokens = [f"ios.gvs+{t[4:]}" for t in gvs_tokens]
+
+    ios_yt_args: dict[str, Any] = {k: v for k, v in yt_args.items() if k != "po_token"}
+    ios_yt_args["player_client"] = ["ios"]
+    if ios_tokens:
+        ios_yt_args["po_token"] = ios_tokens
+
+    # ios no soporta cookiefile — excluirlo
+    ios_opts = {k: v for k, v in auth_opts.items() if k not in ("cookiefile", "extractor_args")}
+    ios_opts["extractor_args"] = {**extractor_args, "youtube": ios_yt_args}
+    return ios_opts
+
+
 def _download_audio(url: str, temp_dir: Path, auth_opts: dict[str, Any]) -> tuple[Path, dict[str, Any]]:
     from yt_dlp import YoutubeDL
 
     output_template = str(temp_dir / "%(id)s.%(ext)s")
-    opts: dict[str, Any] = {
-        **auth_opts,
-        "format": "140/251/bestaudio/best",  # 140=m4a, 251=webm/opus; evita formatos que requieren JS runtime
+    common_opts: dict[str, Any] = {
         "quiet": True,
         "no_warnings": True,
         "noprogress": True,
@@ -182,8 +205,25 @@ def _download_audio(url: str, temp_dir: Path, auth_opts: dict[str, Any]) -> tupl
         "cachedir": False,
     }
 
-    with YoutubeDL(opts) as ydl:
-        info = ydl.extract_info(url, download=True)
+    # ios bypasea n-challenge pero sus formatos HTTPS requieren token ios nativo →
+    # usar HLS m3u8 (234/233) que no necesitan GVS PO token.
+    # web+cookies: usa HTTPS dash normal si el n-challenge no es necesario con cookies.
+    ios_opts = _build_ios_opts(auth_opts)
+    last_error: Exception | None = None
+    for attempt_opts, fmt in [
+        ({**ios_opts, **common_opts, "format": "234/233/bestaudio[protocol!=https]/bestaudio/best"}, "ios-hls"),
+        ({**auth_opts, **common_opts, "format": "140/251/bestaudio/best"}, "web+cookies"),
+    ]:
+        try:
+            with YoutubeDL(attempt_opts) as ydl:
+                info = ydl.extract_info(url, download=True)
+            if info is not None:
+                break
+        except Exception as exc:
+            last_error = exc
+            continue
+    else:
+        raise last_error or RuntimeError("yt-dlp no pudo extraer información del video.")
 
     if info is None:
         raise RuntimeError("yt-dlp no pudo extraer información del video.")
